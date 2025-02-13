@@ -11,53 +11,48 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	swap_stack_a(long *stack_a, int *numbers_in_stack_a)
+void sa(long *stack_a, int *numbers_a)
 {
-	long	*temporary;
+    long temporary_value;
 
-	temporary = (long *)malloc(sizeof(long));
-	if (numbers_in_stack_a[1] > 1)
-	{
-		temporary[0] = stack_a[0];
-		stack_a[0] = stack_a[1];
-		stack_a[1] = temporary[0];
-	}
-	free(temporary);
-	write(1, "Swap Stack A\n", 13);
+    if (numbers_a[0] > 1)
+    {
+        temporary_value = stack_a[0];
+        stack_a[0] = stack_a[1];
+        stack_a[1] = temporary_value;
+    }
+    write(1, "Swap Stack in A\n", 16);
 }
 
-void	swap_stack_b(long *stack_b, int *numbers_in_stack_b)
+void sb(long *stack_b, int *numbers_b)
 {
-	long	*temporary;
+    long temporary_value;
 
-	temporary = (long *)malloc(sizeof(long));
-	if (*numbers_in_stack_b > 1)
-	{
-		temporary[0] = stack_b[0];
-		stack_b[0] = stack_b[1];
-		stack_b[1] = temporary[0];
-	}
-	free(temporary);
-	write(1, "Swap Stack B\n", 13);
+    if (*numbers_b > 1)
+    {
+        temporary_value = stack_b[0];
+        stack_b[0] = stack_b[1];
+        stack_b[1] = temporary_value;
+    }
+    write(1, "Swap Stack in B\n", 16);
 }
 
-void	swap_stack_a_and_stack_b(long *stack_a, long *stack_b, int *numbers_in_stack_a, int *numbers_in_stack_b)
+void ss(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
 {
-	long	*temporary;
+    long temporary_value_a;
+    long temporary_value_b;
 
-	temporary = (long *)malloc(sizeof(long));
-	if (numbers_in_stack_a[1] > 1)
-	{
-		temporary[0] = stack_a[0];
-		stack_a[0] = stack_a[1];
-		stack_a[1] = temporary[0];
-	}
-	if (*numbers_in_stack_b > 1)
-	{
-		temporary[0] = stack_b[0];
-		stack_b[0] = stack_b[1];
-		stack_b[1] = temporary[0];
-	}
-	free(temporary);
-	write(1, "Swap both Stack A and Stack B\n", 42);
+    if (numbers_a[0] > 1)
+    {
+        temporary_value_a = stack_a[0];
+        stack_a[0] = stack_a[1];
+        stack_a[1] = temporary_value_a;
+    }
+    if (*numbers_b > 1)
+    {
+        temporary_value_b = stack_b[0];
+        stack_b[0] = stack_b[1];
+        stack_b[1] = temporary_value_b;
+    }
+    write(1, "Swap Stacks A & B\n", 18);
 }
