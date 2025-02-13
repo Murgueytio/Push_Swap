@@ -11,64 +11,79 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	reverse_rotate_stack_a(long *stack_a, int *numbers_in_stack_a)
+void rra(long *stack_a, int *numbers_a)
 {
-	int		i;
-	long	*temporary;
+    int i;
+    long temporary_value;
+    i = *numbers_a - 1;
 
-	i = numbers_in_stack_a[1] - 1;
-	temporary = (long *)malloc(sizeof(long));
-	*temporary = stack_a[numbers_in_stack_a[1] - 1];
-	while (i > 0)
-	{
-		stack_a[i] = stack_a[i - 1];
-		i--;
-	}
-	stack_a[0] = *temporary;
-	free(temporary);
-	write(1, "Reverse Rotate Stack A\n", 23);
+    if (*numbers_a > 1)
+    {
+        temporary_value = stack_a[*numbers_a - 1];
+        i = *numbers_a - 1;
+    
+        while (i > 0)
+        {
+            stack_a[i] = stack_a[i - 1];
+            i--;
+        }
+        stack_a[0] = temporary_value;
+        write(1, "Reverse Rotate Stack in A\n", 26);
+    }
 }
 
-void	reverse_rotate_stack_b(long *stack_b, int *numbers_in_stack_b)
+void rrb(long *stack_b, int *numbers_b)
 {
-	int		i;
-	long	*temporary;
+    int i;
+    long temporary_value;
+    i = numbers_b[0] - 1;
 
-	i = *numbers_in_stack_b - 1;
-	temporary = (long *)malloc(sizeof(long));
-	*temporary = stack_b[*numbers_in_stack_b - 1];
-	while (i > 0)
-	{
-		stack_b[i] = stack_b[i - 1];
-		i--;
-	}
-	stack_b[0] = *temporary;
-	free(temporary);
-	write(1, "Reverse Rotate Stack B\n", 23);
+    if (numbers_b[0] > 0)
+    {
+        temporary_value = stack_b[numbers_b[0] - 1];
+        i = numbers_b[0] - 1;
+    
+        while (i > 0)
+        {
+            stack_b[i] = stack_b[i - 1];
+            i--;
+        }
+        stack_b[0] = temporary_value;
+        write(1, "Reverse Rotate Stack in B\n", 26);
+    }
 }
 
-void	reverse_rotate_stack_a_and_stack_b(long *stack_a, long *stack_b, int *numbers_in_stack_a, int *numbers_in_stack_b)
+void rrr(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
 {
-	int		i;
-	long	*temporary;
+    int i_a;
+    int i_b;
+    long temporary_value_a;
+    long temporary_value_b;
 
-	i = numbers_in_stack_b[1] - 1;
-	temporary = (long *)malloc(sizeof(long));
-	*temporary = stack_a[numbers_in_stack_a[1] - 1];
-	while (i > 0)
-	{
-		stack_a[i] = stack_a[i - 1];
-		i--;
-	}
-	stack_a[0] = *temporary;
-	i = 0;
-	*temporary = stack_b[0];
-	while (i < *numbers_in_stack_b)
-	{
-		stack_b[i] = stack_b[i + 1];
-		i++;
-	}
-	stack_b[*numbers_in_stack_b - 1] = *temporary;
-	free(temporary);
-	write(1, "Reserve Rotate both Stack A and Stack B\n", 52);
+    if (numbers_a[0] > 0)
+    {
+        temporary_value_a = stack_a[numbers_a[0] - 1];
+        i_a = numbers_a[0] - 1;
+
+        while (i_a > 0)
+        {
+            stack_a[i_a] = stack_a[i_a - 1];
+            i_a--;
+        }
+        stack_a[0] = temporary_value_a;
+    }
+
+    if (numbers_b[0] > 0)
+    {
+        temporary_value_b = stack_b[numbers_b[0] - 1];
+        i_b = numbers_b[0] - 1;
+
+        while (i_b > 0)
+        {
+            stack_b[i_b] = stack_b[i_b - 1];
+            i_b--;
+        }
+        stack_b[0] = temporary_value_b;
+    }
+    write(1, "Reverse Rotate Stacks A & B\n", 28);
 }
