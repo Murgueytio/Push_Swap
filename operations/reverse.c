@@ -20,8 +20,7 @@ void rra(long *stack_a, int *numbers_a)
     if (*numbers_a > 1)
     {
         temporary_value = stack_a[*numbers_a - 1];
-        i = *numbers_a - 1;
-    
+ 
         while (i > 0)
         {
             stack_a[i] = stack_a[i - 1];
@@ -41,7 +40,6 @@ void rrb(long *stack_b, int *numbers_b)
     if (numbers_b[0] > 0)
     {
         temporary_value = stack_b[numbers_b[0] - 1];
-        i = numbers_b[0] - 1;
     
         while (i > 0)
         {
