@@ -14,6 +14,7 @@ void pa(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
         }
         stack_a[0] = stack_b[0];
         (*numbers_a)++;
+        (*numbers_b)--;
         int j;
         j = 0;
         while (j < *numbers_b - 1)
@@ -21,7 +22,6 @@ void pa(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
             stack_b[j] = stack_b[j + 1];
             j++;
         }
-        (*numbers_b)--;
     }
     write(1, "Push Stack B to A\n", 19);
 }
@@ -40,6 +40,7 @@ void pb(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
         }
         stack_b[0] = stack_a[0];
         (*numbers_b)++;
+        (*numbers_a)--;
         int j;
         j = 0;
         while (j < *numbers_a - 1)
@@ -47,7 +48,6 @@ void pb(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
             stack_a[j] = stack_a[j + 1];
             j++;
         }
-        (*numbers_a)--;
     }
     write(1, "Push Stack A to B\n", 19);
 }
