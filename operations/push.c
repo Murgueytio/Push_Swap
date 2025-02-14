@@ -17,7 +17,7 @@ void pa(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
         (*numbers_b)--;
         int j;
         j = 0;
-        while (j < *numbers_b - 1)
+        while (j < *numbers_b)
         {
             stack_b[j] = stack_b[j + 1];
             j++;
@@ -43,7 +43,7 @@ void pb(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
         (*numbers_a)--;
         int j;
         j = 0;
-        while (j < *numbers_a - 1)
+        while (j < *numbers_a)
         {
             stack_a[j] = stack_a[j + 1];
             j++;
