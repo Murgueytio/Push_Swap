@@ -17,23 +17,6 @@ int is_sorted(t_node *stack)
 	return (1);
 }
 
-// Returns the index of the smallest element in the stack.
-int get_min_index(long *stack, int size)
-{
-	int i;
-	int min_index;
-
-	min_index = 0;
-	i = 1;
-	while (i < size)
-	{
-		if (stack[i] < stack[min_index])
-			min_index = i;
-		i++;
-	}
-	return (min_index);
-}
-
 void    error_exit(t_node **stack_a, t_node **stack_b)
 {
 	if (stack_a)
