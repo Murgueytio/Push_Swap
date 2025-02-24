@@ -1,85 +1,42 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oscamurg <oscamurg@student.42madrid.com>   #+#  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-09 13:25:18 by oscamurg          #+#    #+#             */
-/*   Updated: 2025-01-09 13:25:18 by oscamurg         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include "push_swap.h"
+#include "../push_swap.h"
 
-void ra(long *stack_a, int *numbers_a)
+void    ra(t_node **stack_a)
 {
-    int i;
-    long temporary_value;
-    i = 0;
+    t_node  *first;
+    t_node  *last;
 
-    if (*numbers_a > 1) // No rotar si hay 0 o 1 elementos
-    {
-        temporary_value = stack_a[0];
-
-        while (i < *numbers_a - 1)
-        {
-            stack_a[i] = stack_a[i + 1];
-            i++;
-        }
-        stack_a[*numbers_a - 1] = temporary_value;
-    }
-    write(1, "Rotate Stack in A\n", 18);
+    if (!*stack_a || !(*stack_a)->next)
+        return ;
+    first = *stack_a;
+    last = *stack_a;
+    while (last->next)
+        last = last->next;
+    *stack_a = first->next;
+    first->next = NULL;
+    last->next = first;
+    write(1, "ra\n", 3);
 }
 
-void rb(long *stack_b, int *numbers_b)
+void    rb(t_node **stack_b)
 {
-    int i;
-    long temporary_value;
-    i = 0;
+    t_node  *first;
+    t_node  *last;
 
-    if (numbers_b[0] > 0)
-    {
-        temporary_value = stack_b[0];
-
-        while (i < numbers_b[0] - 1)
-        {
-            stack_b[i] = stack_b[i + 1];
-            i++;
-        }
-        stack_b[numbers_b[0] - 1] = temporary_value;
-    }
-    write(1, "Rotate Stack in B\n", 18);
+    if (!*stack_b || !(*stack_b)->next)
+        return ;
+    first = *stack_b;
+    last = *stack_b;
+    while (last->next)
+        last = last->next;
+    *stack_b = first->next;
+    first->next = NULL;
+    last->next = first;
+    write(1, "rb\n", 3);
 }
 
-void    rr(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
+void    rr(t_node **stack_a, t_node **stack_b)
 {
-    int i;
-    long temporary_value_a;
-    long temporary_value_b;
-    i = 0;
-
-    if (numbers_a[0] > 0)
-    {
-        temporary_value_a = stack_a[0];
-
-        while (i < numbers_a[0] - 1)
-        {
-            stack_a[i] = stack_a[i + 1];
-            i++;
-        }
-        stack_a[numbers_a[0] - 1] = temporary_value_a;
-    }
-    i = 0;
-    if (numbers_b[0] > 0)
-    {
-        temporary_value_b = stack_b[0];
-
-        while (i < numbers_b[0] - 1)
-        {
-            stack_b[i] = stack_b[i + 1];
-            i++;
-        }
-        stack_b[numbers_b[0] - 1] = temporary_value_b;
-    }
-    write(1, "Rotate Stack A & B\n", 19);   
+    ra(stack_a);
+    rb(stack_b);
+    write(1, "rr\n", 3);
 }
