@@ -84,4 +84,4 @@ void    sort_small(t_node **stack_a, t_node **stack_b)
     sort_three(stack_a);
     while (*stack_b)
         pa(stack_a, stack_b);
-} 
+}
