@@ -6,6 +6,8 @@ static int  get_max_bits(t_node *stack)
     int     max_bits;
     t_node  *current;
 
+    if (!stack)
+        return (0);
     max = stack->value;
     current = stack->next;
     while (current)
