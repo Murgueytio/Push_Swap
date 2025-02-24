@@ -1,58 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oscamurg <oscamurg@student.42madrid.com>   #+#  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-09 13:25:57 by oscamurg          #+#    #+#             */
-/*   Updated: 2025-01-09 13:25:57 by oscamurg         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include "push_swap.h"
+#include "../push_swap.h"
 
-void sa(long *stack_a, int *numbers_a)
+void    sa(t_node **stack_a)
 {
-    long temporary_value;
+    t_node  *first;
+    t_node  *second;
 
-    if (numbers_a[0] > 1)
-    {
-        temporary_value = stack_a[0];
-        stack_a[0] = stack_a[1];
-        stack_a[1] = temporary_value;
-    }
-    write(1, "Swap Stack in A\n", 16);
+    if (!*stack_a || !(*stack_a)->next)
+        return ;
+    first = *stack_a;
+    second = (*stack_a)->next;
+    first->next = second->next;
+    second->next = first;
+    *stack_a = second;
+    write(1, "sa\n", 3);
 }
 
-void sb(long *stack_b, int *numbers_b)
+void    sb(t_node **stack_b)
 {
-    long temporary_value;
+    t_node  *first;
+    t_node  *second;
 
-    if (*numbers_b > 1)
-    {
-        temporary_value = stack_b[0];
-        stack_b[0] = stack_b[1];
-        stack_b[1] = temporary_value;
-    }
-    write(1, "Swap Stack in B\n", 16);
+    if (!*stack_b || !(*stack_b)->next)
+        return ;
+    first = *stack_b;
+    second = (*stack_b)->next;
+    first->next = second->next;
+    second->next = first;
+    *stack_b = second;
+    write(1, "sb\n", 3);
 }
 
-void ss(long *stack_a, long *stack_b, int *numbers_a, int *numbers_b)
+void    ss(t_node **stack_a, t_node **stack_b)
 {
-    long temporary_value_a;
-    long temporary_value_b;
-
-    if (numbers_a[0] > 1)
-    {
-        temporary_value_a = stack_a[0];
-        stack_a[0] = stack_a[1];
-        stack_a[1] = temporary_value_a;
-    }
-    if (*numbers_b > 1)
-    {
-        temporary_value_b = stack_b[0];
-        stack_b[0] = stack_b[1];
-        stack_b[1] = temporary_value_b;
-    }
-    write(1, "Swap Stacks A & B\n", 18);
+    sa(stack_a);
+    sb(stack_b);
+    write(1, "ss\n", 3);
 }
