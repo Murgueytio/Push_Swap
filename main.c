@@ -1,90 +1,138 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oscamurg <oscamurg@student.42madrid.com>   #+#  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-09 13:11:31 by oscamurg          #+#    #+#             */
-/*   Updated: 2025-01-09 13:11:31 by oscamurg         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 #include "push_swap.h"
 
-void	free_and_exit(int *numbers_in_stack_a, int *numbers_in_stack_b)
+static void error_exit(void)
 {
-	free(numbers_in_stack_a);
-	free(numbers_in_stack_b);
-	exit(0);
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
 }
 
-void	free_and_exit_without_errors(int *numbers_in_stack_a, int *numbers_in_stack_b)
+static int check_valid_number(const char *str, long *num)
 {
-	free(numbers_in_stack_a);
-	free(numbers_in_stack_b);
-	write(1, "Error\n", 6);
-	exit(0);
+	int		i;
+	int		sign;
+	long	result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+    if (!str || !str[0])
+        return (0);
+    if (str[i] == '-' || str[i] == '+')
+    {
+        if (str[i] == '-')
+            sign = -1;
+        i++;
+    }
+    if (!str[i])
+        return (0);
+    while (str[i])
+    {
+        if (str[i] < '0' || str[i] > '9')
+            return (0);
+        if (result > (LONG_MAX - (str[i] - '0')) / 10)
+            return (0);
+        result = result * 10 + (str[i] - '0');
+        i++;
+    }
+    *num = result * sign;
+    return (1);
 }
 
-void	check_parameters(int argc, char **argv, int *numbers_in_stack_a, int *numbers_in_stack_b)
+static int has_duplicates(long *arr, int size)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
-	i = 1;
-	j = 0;
-	if (argc < 2)
-		free_and_exit(numbers_in_stack_a, numbers_in_stack_b);
-	while (i < argc)
+	i = 0;
+	while (i < size - 1)
 	{
-		if ((argv[i][ft_strlen(argv[i]) - 1] == ' ') || (argv[i][0] == ' '))
-			free_and_exit_without_errors(numbers_in_stack_a, numbers_in_stack_b);
-		j = 0;
-		while (j < ft_strlen(argv[i]))
+		j = i + 1;
+		while (j < size)
 		{
-			if (((argv[i][j] < 48) || (argv[i][j] > 57)) && (argv[i][j] != 32))
-			{
-				if (argv[i][j] != 45)
-					free_and_exit_without_errors(numbers_in_stack_a, numbers_in_stack_b);
-			}
-			if ((argv[i][j] == 32) && (argv[i][j + 1] == 32))
-				free_and_exit_without_errors(numbers_in_stack_a, numbers_in_stack_b);
+			if (arr[i] == arr[j])
+				return (1);
 			j++;
 		}
 		i++;
 	}
-}
-
-void	set_numbers(int *numbers_in_stack_a, int *numbers_in_stack_b, int argc)
-{
-	numbers_in_stack_a[0] = argc - 1;
-	numbers_in_stack_a[1] = numbers_in_stack_a[0];
-	*numbers_in_stack_b = 0;
-}
-
-int	main(int argc, char **argv)
-{
-	long	*stack_a;
-	long	*stack_b;
-	int		*numbers_in_stack_a;
-	int		*numbers_in_stack_b;
-
-	numbers_in_stack_a = (int *)malloc(2 * sizeof(int));
-	numbers_in_stack_b = (int *)malloc(sizeof(int));
-	check_parameters(argc, argv, numbers_in_stack_a, numbers_in_stack_b);
-	set_numbers(numbers_in_stack_a, numbers_in_stack_b, argc);
-	stack_a = (long *)malloc(sizeof(long) * stack_size(argc, argv));
-	stack_b = (long *)malloc(sizeof(long) * stack_size(argc, argv));
-	if ((seperating_input_numbers(stack_a, numbers_in_stack_a, argv) == -1) || (is_stack_sorted(stack_a, numbers_in_stack_a) == 0))
-		free_stacks(stack_a, stack_b, numbers_in_stack_a, numbers_in_stack_b);
-	if ((numbers_in_stack_a[1] == 2) && (stack_a[0] > stack_a[1]))
-		rotate_stack_a(stack_a, numbers_in_stack_a);
-	else if (numbers_in_stack_a[1] == 3)
-		sort_3_numbers(stack_a, numbers_in_stack_a);
-	else if (numbers_in_stack_a[1] == 5)
-		sort_5_numbers(stack_a, stack_b, numbers_in_stack_a, numbers_in_stack_b);
-	else
-		sort_beyond_3_and_5_numbers(stack_a, stack_b, numbers_in_stack_a, numbers_in_stack_b);
-	free_stacks(stack_a, stack_b, numbers_in_stack_a, numbers_in_stack_b);
 	return (0);
+}
+
+static void parse_args(int argc, char **argv, long **stack_a,
+                        long **stack_b, int *numbers_a)
+{
+    int i;
+    long num;
+
+    *numbers_a = argc - 1;
+    *stack_a = malloc(sizeof(long) * (*numbers_a));
+    *stack_b = malloc(sizeof(long) * (*numbers_a));
+    if (!(*stack_a) || !(*stack_b))
+        error_exit();
+    i = 1;
+    while (i < argc)
+    {
+        if (!check_valid_number(argv[i], &num))
+            error_exit();
+        (*stack_a)[i - 1] = num;
+        i++;
+    }
+    if (has_duplicates(*stack_a, *numbers_a))
+        error_exit();
+}
+
+static void init_stacks(t_node **stack_a, char **argv, int argc)
+{
+    int     i;
+    long    num;
+    t_node  *new_node;
+
+    *stack_a = NULL;
+    i = 1;
+    while (i < argc)
+    {
+        num = ft_atoi(argv[i]);
+        if (num == LONG_MAX || num > INT_MAX || num < INT_MIN)
+            error_exit();
+        new_node = create_node((int)num);
+        if (!new_node)
+            error_exit();
+        add_node_back(stack_a, new_node);
+        i++;
+    }
+    if (check_duplicates(*stack_a))
+        error_exit();
+}
+
+static void sort_stack(t_node **stack_a, t_node **stack_b)
+{
+    int size;
+
+    if (is_sorted(*stack_a))
+        return;
+    
+    size = stack_size(*stack_a);
+    if (size <= 3)
+        sort_three(stack_a);
+    else if (size <= 5)
+        sort_small(stack_a, stack_b);
+    else
+        sort_big(stack_a, stack_b);
+}
+
+int main(int argc, char **argv)
+{
+    t_node  *stack_a;
+    t_node  *stack_b;
+
+    if (argc < 2)
+        return (0);
+
+    stack_b = NULL;
+    init_stacks(&stack_a, argv, argc);
+    sort_stack(&stack_a, &stack_b);
+
+    free_stack(&stack_a);
+    free_stack(&stack_b);
+    return (0);
 }
