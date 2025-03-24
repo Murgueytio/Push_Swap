@@ -1,9 +1,10 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
 
 typedef struct s_node
 {
@@ -24,7 +25,7 @@ void	rra(t_node **stack_a);
 void	rrb(t_node **stack_b);
 void	rrr(t_node **stack_a, t_node **stack_b);
 
-// Stack utilities
+// Stack utils
 t_node	*create_node(int value);
 void	add_node_back(t_node **stack, t_node *new_node);
 void	add_node_front(t_node **stack, t_node *new_node);
@@ -36,6 +37,14 @@ int		is_sorted(t_node *stack);
 void	error_exit(t_node **stack_a, t_node **stack_b);
 long	ft_atoi(const char *str);
 int		check_duplicates(t_node *stack);
+
+// Split
+char	**ft_split(const char *s, char c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(char *src);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+void	free_split(char **res, int k);
 
 // Sorting algorithms
 void	sort_three(t_node **stack);
