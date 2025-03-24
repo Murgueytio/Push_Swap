@@ -28,6 +28,9 @@ void	rb(t_node **stack_b)
 	last = *stack_b;
 	while (last->next)
 		last = last->next;
+	first->next = NULL;
+	last->next = first;
+	write(1, "rb\n", 3);
 }
 
 void	rr(t_node **stack_a, t_node **stack_b)
