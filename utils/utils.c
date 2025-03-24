@@ -1,9 +1,8 @@
 #include "../push_swap.h"
 
-// Checks if the stack is already sorted in ascending order.
-int is_sorted(t_node *stack)
+int	is_sorted(t_node *stack)
 {
-	t_node  *current;
+	t_node	*current;
 
 	if (!stack)
 		return (1);
@@ -17,7 +16,7 @@ int is_sorted(t_node *stack)
 	return (1);
 }
 
-void    error_exit(t_node **stack_a, t_node **stack_b)
+void	error_exit(t_node **stack_a, t_node **stack_b)
 {
 	if (stack_a)
 		free_stack(stack_a);
@@ -27,15 +26,15 @@ void    error_exit(t_node **stack_a, t_node **stack_b)
 	exit(EXIT_FAILURE);
 }
 
-long    ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int     i;
-	int     sign;
-	long    result;
+	int		i;
+	int		sign;
+	long	rs;
 
 	i = 0;
 	sign = 1;
-	result = 0;
+	rs = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -46,21 +45,20 @@ long    ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
-		if ((sign == 1 && result > INT_MAX) || 
-			(sign == -1 && result * sign < INT_MIN))
-			return (LONG_MAX);
+		rs = rs * 10 + (str[i] - '0');
+		if ((sign == 1 && rs > INT_MAX) || (sign == -1 && rs * sign < INT_MIN))
+				return (LONG_MAX);
 		i++;
 	}
-	if (str[i] != '\0')
+	if (str[i] && (str[i] < '0' || str[i] > '9'))
 		return (LONG_MAX);
-	return (result * sign);
+	return (rs * sign);
 }
 
-int     check_duplicates(t_node *stack)
+int	check_duplicates(t_node *stack)
 {
-	t_node  *current;
-	t_node  *check;
+	t_node	*current;
+	t_node	*check;
 
 	current = stack;
 	while (current)
@@ -76,3 +74,9 @@ int     check_duplicates(t_node *stack)
 	}
 	return (0);
 }
+
+// Checks if the stack is already sorted in ascending order.
+// rs = result
+/* If we used write(1, "Error\n", 6) the error message would go to output.txt.
+Since we used write(2, "Error\n", 6) the message appears on the screen, 
+without redirecting it to a file.*/
